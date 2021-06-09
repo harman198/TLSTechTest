@@ -13,6 +13,10 @@ namespace TLSJobs.Api.Tests.Controllers
     public class JobsControllerTests
     {
 
+        private readonly Job job1 = new Job() { Id = 1, Title = "Front End Developer", Description = "Expert Front End Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now };
+        private readonly Job job2 = new Job() { Id = 2, Title = "Back End Developer", Description = "Expert Back End Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now };
+        private readonly Job job3 = new Job() { Id = 3, Title = "Full Stack Developer", Description = "Expert Full Stack Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now };
+
         private readonly Mock<IRepository> repository = new Mock<IRepository>();
 
         [Fact]
@@ -31,12 +35,7 @@ namespace TLSJobs.Api.Tests.Controllers
         [Fact]
         public void GetJobs_ShouldReturnExpectedItems_WhenJobsAreAvailable()
         {
-            var expectedResult = new List<Job>()
-            {
-                new Job() {Id = 1, Title = "Front End Developer", Description = "Expert Front End Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now},
-                new Job() {Id = 2, Title = "Back End Developer", Description = "Expert Back End Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now},
-                new Job() {Id = 3, Title = "Full Stack Developer", Description = "Expert Full Stack Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now}
-            };
+            var expectedResult = new List<Job>() { job1, job2, job3 };
             repository.Setup(x => x.GetJobs()).Returns(expectedResult);
 
             var controller = new JobsController(repository.Object);
@@ -52,7 +51,6 @@ namespace TLSJobs.Api.Tests.Controllers
         {
             const int IdToSearch = 1;
 
-            var job1 = new Job() { Id = IdToSearch, Title = "Front End Developer", Description = "Expert Front End Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now };
             repository.Setup(x => x.GetJob(IdToSearch)).Returns(job1);
 
             var controller = new JobsController(repository.Object);
@@ -84,7 +82,6 @@ namespace TLSJobs.Api.Tests.Controllers
         {
             const int IdToSearch = 1;
 
-            var job1 = new Job() { Id = IdToSearch, Title = "Front End Developer", Description = "Expert Front End Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now };
             repository.Setup(x => x.GetJob(IdToSearch)).Returns(job1);
 
             var controller = new JobsController(repository.Object);
@@ -100,8 +97,7 @@ namespace TLSJobs.Api.Tests.Controllers
         {
             const int IdToSearch = 1;
 
-            var job1 = new Job() { Id = IdToSearch, Title = "Front End Developer", Description = "Expert Front End Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now };
-            repository.Setup(x => x.GetJob(IdToSearch)).Returns((Job) null);
+            repository.Setup(x => x.GetJob(IdToSearch)).Returns((Job)null);
 
             var controller = new JobsController(repository.Object);
 
