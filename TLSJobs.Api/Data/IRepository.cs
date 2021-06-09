@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TLSJobs.Api.Dtos;
 using TLSJobs.Api.Models;
 
 namespace TLSJobs.Api.Data
@@ -8,5 +9,6 @@ namespace TLSJobs.Api.Data
         IEnumerable<Job> GetJobs();
         Job GetJob(int id);
         void RemoveJob(int id);
+        Job CreateJob(CreateJobDto jobdto);
     }
 }

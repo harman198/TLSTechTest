@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TLSJobs.Api.Dtos;
 using TLSJobs.Api.Models;
 
 namespace TLSJobs.Api.Data
@@ -18,6 +19,21 @@ namespace TLSJobs.Api.Data
         public InMemoryJobsRepository()
         {
             jobs = new List<Job>() { job1, job2, job3 };
+        }
+
+        public Job CreateJob(CreateJobDto jobdto)
+        {
+            int newJobID = jobs.Select(x => x.Id).Max();
+            var job = new Job()
+            {
+                Id = newJobID + 1,
+                Title = jobdto.Title,
+                Description = jobdto.Description,
+                Salary = jobdto.Salary,
+                Type = (JobType)Enum.Parse(typeof(JobType), jobdto.Type),
+                AddedAt = DateTime.Now
+            };
+            return job;
         }
 
         public Job GetJob(int id)

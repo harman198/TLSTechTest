@@ -131,5 +131,20 @@ namespace TLSJobs.Api.Tests.Controllers
             actualResult.Should().BeOfType<BadRequestResult>();
         }
 
+
+        [Fact]
+        public void AddJob_ShouldReturnCreatedAtResult_WhenSubmittedJobIsValid()
+        {
+            var job = new CreateJobDto() { Title = "title", Description = "description", Salary = 100, Type = JobType.backend.ToString() };
+
+            repository.Setup(x => x.CreateJob(job)).Returns(job1);
+            var controller = new JobsController(repository.Object);
+
+            var actualResult = controller.CreateJob(job);
+
+            actualResult.Should().BeOfType<CreatedAtActionResult>();
+            actualResult.Should().Equals(job1);
+        }
+
     }
 }

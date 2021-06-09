@@ -47,9 +47,11 @@ namespace TLSJobs.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateJob(CreateJobDto job)
+        public ActionResult CreateJob(CreateJobDto jobdto)
         {
-            return BadRequest();
+            var job = _repository.CreateJob(jobdto);
+            if (job is null) return BadRequest();
+            return CreatedAtAction(nameof(GetJob), new { id = job.Id }, job.toDto());
         }
     }
 }
