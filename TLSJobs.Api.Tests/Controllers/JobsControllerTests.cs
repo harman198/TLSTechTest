@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TLSJobs.Api.Controllers;
 using TLSJobs.Api.Data;
 using TLSJobs.Api.Models;
@@ -79,6 +76,22 @@ namespace TLSJobs.Api.Tests.Controllers
 
             actualResult.Result.Should().BeOfType<NotFoundResult>();
             actualResult.Value.Should().BeNull();
+        }
+
+
+        [Fact]
+        public void DeleteJob_ShouldRemoveJob_WhenJobIsPresentInRepository()
+        {
+            const int IdToSearch = 1;
+
+            var job1 = new Job() { Id = IdToSearch, Title = "Front End Developer", Description = "Expert Front End Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now };
+            repository.Setup(x => x.GetJob(IdToSearch)).Returns(job1);
+
+            var controller = new JobsController(repository.Object);
+
+            var actualResult = controller.DeleteJob(IdToSearch);
+
+            actualResult.Should().BeOfType<NoContentResult>();
         }
 
     }

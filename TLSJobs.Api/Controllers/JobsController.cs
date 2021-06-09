@@ -32,5 +32,10 @@ namespace TLSJobs.Api.Controllers
 
             return job;
         }
+
+        public ActionResult DeleteJob(int id)
+        {
+            return NoContent();
+        }
     }
 }
