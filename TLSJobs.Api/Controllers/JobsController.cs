@@ -24,9 +24,13 @@ namespace TLSJobs.Api.Controllers
             return _repository.GetJobs();
         }
 
-        public Job GetJob(int id)
+        public ActionResult<Job> GetJob(int id)
         {
-            return _repository.GetJob(id);
+            Job job = _repository.GetJob(id);
+
+            if (job is null) return NotFound();
+
+            return job;
         }
     }
 }

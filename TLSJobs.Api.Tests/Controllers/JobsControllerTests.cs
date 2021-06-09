@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -61,8 +62,23 @@ namespace TLSJobs.Api.Tests.Controllers
 
             var actualResult = controller.GetJob(IdToSearch);
 
-            actualResult.Should().BeEquivalentTo(job1);
+            actualResult.Result.Should().BeNull();
+            actualResult.Value.Should().BeEquivalentTo(job1);
+        }
 
+        [Fact]
+        public void GetJob_ShouldReturnNotFound_WhenJobIsNotFound()
+        {
+            const int IdToSearch = 1;
+
+            repository.Setup(x => x.GetJob(IdToSearch)).Returns((Job)null);
+
+            var controller = new JobsController(repository.Object);
+
+            var actualResult = controller.GetJob(IdToSearch);
+
+            actualResult.Result.Should().BeOfType<NotFoundResult>();
+            actualResult.Value.Should().BeNull();
         }
 
     }
