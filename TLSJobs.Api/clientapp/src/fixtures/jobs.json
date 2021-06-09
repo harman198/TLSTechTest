@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "title": "Post from the api",
+        "description": "Expert Front End Developer needed for startup.",
+        "type": "frontend",
+        "salary": 80000.0,
+        "addedAt": "2021-06-09T22:56:47.2871288"
+    },
+    {
+        "id": 2,
+        "title": "Backend Developer",
+        "description": "Expert Back End Developer needed for startup.",
+        "type": "backend",
+        "salary": 100000.0,
+        "addedAt": "2021-06-09T22:57:29.5213482"
+    },
+    {
+        "id": 3,
+        "title": "Junior Backend Developer",
+        "description": "Junior Back End Developer needed for startup.",
+        "type": "backend",
+        "salary": 70000.0,
+        "addedAt": "2021-06-09T22:58:59.5213482"
+    },
+    {
+        "id": 4,
+        "title": "Full Stack Developer",
+        "description": "Expert Full Stack Developer needed for startup.",
+        "type": "fullstack",
+        "salary": 130000.0,
+        "addedAt": "2021-06-09T23:02:29.5213482"
+    }
+]
