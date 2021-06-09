@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using FluentAssertions;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,9 @@ namespace TLSJobs.Api.Tests.Controllers
             var controller = new JobsController(repository.Object);
 
             var actualResult = controller.GetJobs();
+
+            actualResult.Should().BeEquivalentTo(expectedResult);
         }
+
     }
 }
