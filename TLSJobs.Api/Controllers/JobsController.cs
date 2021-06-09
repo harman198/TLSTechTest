@@ -39,6 +39,7 @@ namespace TLSJobs.Api.Controllers
 
             if (job is null) return NotFound();
 
+            _repository.RemoveJob(id);
             return NoContent();
         }
     }

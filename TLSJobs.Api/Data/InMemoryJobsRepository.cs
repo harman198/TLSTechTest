@@ -29,5 +29,10 @@ namespace TLSJobs.Api.Data
         {
             return jobs;
         }
+
+        public void RemoveJob(int id)
+        {
+            jobs.Remove(GetJob(id));
+        }
     }
 }

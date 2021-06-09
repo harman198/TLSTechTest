@@ -7,5 +7,6 @@ namespace TLSJobs.Api.Data
     {
         IEnumerable<Job> GetJobs();
         Job GetJob(int id);
+        void RemoveJob(int id);
     }
 }

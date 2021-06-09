@@ -19,6 +19,8 @@ namespace TLSJobs.Api.Tests.Controllers
 
         private readonly Mock<IRepository> repository = new Mock<IRepository>();
 
+        private const int IdToSearch = 1;
+
         [Fact]
         public void GetJobs_ShouldReturnEmpty_WhenNoJobsAvailable()
         {
@@ -49,8 +51,6 @@ namespace TLSJobs.Api.Tests.Controllers
         [Fact]
         public void GetJob_ShouldReturnExpectedJob_WhenJobIsFound()
         {
-            const int IdToSearch = 1;
-
             repository.Setup(x => x.GetJob(IdToSearch)).Returns(job1);
 
             var controller = new JobsController(repository.Object);
@@ -64,8 +64,6 @@ namespace TLSJobs.Api.Tests.Controllers
         [Fact]
         public void GetJob_ShouldReturnNotFound_WhenJobIsNotFound()
         {
-            const int IdToSearch = 1;
-
             repository.Setup(x => x.GetJob(IdToSearch)).Returns((Job)null);
 
             var controller = new JobsController(repository.Object);
@@ -80,8 +78,6 @@ namespace TLSJobs.Api.Tests.Controllers
         [Fact]
         public void DeleteJob_ShouldReturnNoContent_WhenJobIsPresentInRepository()
         {
-            const int IdToSearch = 1;
-
             repository.Setup(x => x.GetJob(IdToSearch)).Returns(job1);
 
             var controller = new JobsController(repository.Object);
@@ -93,10 +89,8 @@ namespace TLSJobs.Api.Tests.Controllers
 
 
         [Fact]
-        public void DeleteJob_ShouldReturnNotFound_WhenJobIsPresentInRepository()
+        public void DeleteJob_ShouldReturnNotFound_WhenJobIsNotPresentInRepository()
         {
-            const int IdToSearch = 1;
-
             repository.Setup(x => x.GetJob(IdToSearch)).Returns((Job)null);
 
             var controller = new JobsController(repository.Object);
@@ -104,6 +98,21 @@ namespace TLSJobs.Api.Tests.Controllers
             var actualResult = controller.DeleteJob(IdToSearch);
 
             actualResult.Should().BeOfType<NotFoundResult>();
+        }
+
+
+        [Fact]
+        public void DeleteJob_ShouldRemoveItemFromRepository_WhenJobIsPresentInRepository()
+        {
+            repository.Setup(x => x.GetJob(IdToSearch)).Returns(job1);
+
+            var controller = new JobsController(repository.Object);
+
+            var actualResult = controller.DeleteJob(IdToSearch);
+
+            actualResult.Should().BeOfType<NoContentResult>();
+
+            repository.Verify(x => x.RemoveJob(IdToSearch), Times.Once);
         }
 
     }
