@@ -35,6 +35,10 @@ namespace TLSJobs.Api.Controllers
 
         public ActionResult DeleteJob(int id)
         {
+            var job = _repository.GetJob(id);
+
+            if (job is null) return NotFound();
+
             return NoContent();
         }
     }

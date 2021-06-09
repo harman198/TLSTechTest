@@ -80,7 +80,7 @@ namespace TLSJobs.Api.Tests.Controllers
 
 
         [Fact]
-        public void DeleteJob_ShouldRemoveJob_WhenJobIsPresentInRepository()
+        public void DeleteJob_ShouldReturnNoContent_WhenJobIsPresentInRepository()
         {
             const int IdToSearch = 1;
 
@@ -92,6 +92,22 @@ namespace TLSJobs.Api.Tests.Controllers
             var actualResult = controller.DeleteJob(IdToSearch);
 
             actualResult.Should().BeOfType<NoContentResult>();
+        }
+
+
+        [Fact]
+        public void DeleteJob_ShouldReturnNotFound_WhenJobIsPresentInRepository()
+        {
+            const int IdToSearch = 1;
+
+            var job1 = new Job() { Id = IdToSearch, Title = "Front End Developer", Description = "Expert Front End Developer needed for startup.", Type = JobType.frontend, Salary = 80000, AddedAt = DateTime.Now };
+            repository.Setup(x => x.GetJob(IdToSearch)).Returns((Job) null);
+
+            var controller = new JobsController(repository.Object);
+
+            var actualResult = controller.DeleteJob(IdToSearch);
+
+            actualResult.Should().BeOfType<NotFoundResult>();
         }
 
     }
