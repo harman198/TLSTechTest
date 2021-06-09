@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import JobItem from "./components/JobItem";
 import ListView from "./components/ListView";
-import dummyJobs from "./fixtures/jobs.json";
 
 function App() {
     const [listStyle, setListStyle] = useState("list");
@@ -14,6 +13,24 @@ function App() {
         }
         console.log("List Style", listStyle);
     };
+
+    const [jobs, setJobs] = useState([]);
+
+    const baseURL = "/api/jobs";
+    const fetchDataFromServer = () => {
+        fetch(baseURL)
+            .then((response) => response.json())
+            .then((data) => {
+                setJobs(data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        fetchDataFromServer();
+    }, []);
     return (
         <div className="App">
             <button
@@ -29,7 +46,7 @@ function App() {
                 Toggle List/Grid Style
             </button>
             <ListView listStyle={listStyle}>
-                {dummyJobs.map((job) => (
+                {jobs.map((job) => (
                     <JobItem key={job.id} job={job} />
                 ))}
             </ListView>
