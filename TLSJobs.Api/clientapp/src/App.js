@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import JobItem from "./components/JobItem";
 import ListView from "./components/ListView";
+import Loader from "./components/Loader";
 
 function App() {
     const [listStyle, setListStyle] = useState("list");
@@ -14,14 +15,15 @@ function App() {
         console.log("List Style", listStyle);
     };
 
-    const [jobs, setJobs] = useState([]);
+    const [state, setState] = useState({ loading: false, jobs: [] });
 
     const baseURL = "/api/jobs";
     const fetchDataFromServer = () => {
+        setState({ jobs: [], loading: true });
         fetch(baseURL)
             .then((response) => response.json())
             .then((data) => {
-                setJobs(data);
+                setState({ jobs: data, loading: false });
             })
             .catch((err) => {
                 console.log(err);
@@ -31,6 +33,9 @@ function App() {
     useEffect(() => {
         fetchDataFromServer();
     }, []);
+
+    if (state.loading) return <Loader loadingText={"Loading..."} />;
+
     return (
         <div className="App">
             <button
@@ -46,7 +51,7 @@ function App() {
                 Toggle List/Grid Style
             </button>
             <ListView listStyle={listStyle}>
-                {jobs.map((job) => (
+                {state.jobs.map((job) => (
                     <JobItem key={job.id} job={job} />
                 ))}
             </ListView>
