@@ -60,7 +60,7 @@ namespace TLSJobs.Api.Tests.Controllers
             var actualResult = controller.GetJob(IdToSearch);
 
             actualResult.Result.Should().BeNull();
-            actualResult.Value.Should().BeEquivalentTo(job1);
+            actualResult.Value.Should().BeEquivalentTo(job1.toDto());
         }
 
         [Fact]

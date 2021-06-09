@@ -25,13 +25,13 @@ namespace TLSJobs.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Job> GetJob(int id)
+        public ActionResult<JobDto> GetJob(int id)
         {
             Job job = _repository.GetJob(id);
 
             if (job is null) return NotFound();
 
-            return job;
+            return job.toDto();
         }
 
         [HttpDelete("{id}")]
