@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TLSJobs.Api.Controllers;
 using TLSJobs.Api.Data;
 using TLSJobs.Api.Models;
@@ -37,8 +38,9 @@ namespace TLSJobs.Api.Tests.Controllers
         [Fact]
         public void GetJobs_ShouldReturnExpectedItems_WhenJobsAreAvailable()
         {
-            var expectedResult = new List<Job>() { job1, job2, job3 };
-            repository.Setup(x => x.GetJobs()).Returns(expectedResult);
+            var jobs = new List<Job>() { job1, job2, job3 };
+            repository.Setup(x => x.GetJobs()).Returns(jobs);
+            var expectedResult = jobs.Select(x => x.toDto());
 
             var controller = new JobsController(repository.Object);
 

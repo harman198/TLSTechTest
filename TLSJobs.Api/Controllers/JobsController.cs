@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using TLSJobs.Api.Data;
+using TLSJobs.Api.Dtos;
 using TLSJobs.Api.Models;
 
 namespace TLSJobs.Api.Controllers
@@ -17,9 +19,9 @@ namespace TLSJobs.Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Job> GetJobs()
+        public IEnumerable<JobDto> GetJobs()
         {
-            return _repository.GetJobs();
+            return _repository.GetJobs().Select(x => x.toDto());
         }
 
         [HttpGet("{id}")]
