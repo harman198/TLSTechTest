@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TLSJobs.Api.Controllers;
 using TLSJobs.Api.Data;
+using TLSJobs.Api.Dtos;
 using TLSJobs.Api.Models;
 using Xunit;
 
@@ -115,6 +116,19 @@ namespace TLSJobs.Api.Tests.Controllers
             actualResult.Should().BeOfType<NoContentResult>();
 
             repository.Verify(x => x.RemoveJob(IdToSearch), Times.Once);
+        }
+
+
+        [Fact]
+        public void AddJob_ShouldReturnBadRequest_WhenSubmittedJobIsInvalid()
+        {
+            var job = new CreateJobDto();
+
+            var controller = new JobsController(repository.Object);
+
+            var actualResult = controller.CreateJob(job);
+
+            actualResult.Should().BeOfType<BadRequestResult>();
         }
 
     }

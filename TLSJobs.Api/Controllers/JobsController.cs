@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TLSJobs.Api.Data;
@@ -43,6 +44,12 @@ namespace TLSJobs.Api.Controllers
 
             _repository.RemoveJob(id);
             return NoContent();
+        }
+
+        [HttpPost]
+        public ActionResult CreateJob(CreateJobDto job)
+        {
+            return BadRequest();
         }
     }
 }
