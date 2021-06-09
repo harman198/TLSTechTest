@@ -6,5 +6,6 @@ namespace TLSJobs.Api.Data
     public interface IRepository
     {
         IEnumerable<Job> GetJobs();
+        Job GetJob(int id);
     }
 }

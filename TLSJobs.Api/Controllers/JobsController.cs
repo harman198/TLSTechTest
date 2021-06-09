@@ -23,5 +23,10 @@ namespace TLSJobs.Api.Controllers
         {
             return _repository.GetJobs();
         }
+
+        public Job GetJob(int id)
+        {
+            return _repository.GetJob(id);
+        }
     }
 }
