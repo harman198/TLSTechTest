@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TLSJobs.Api.Data;
 using TLSJobs.Api.Models;
 
@@ -19,11 +16,13 @@ namespace TLSJobs.Api.Controllers
             this._repository = repository;
         }
 
+        [HttpGet]
         public IEnumerable<Job> GetJobs()
         {
             return _repository.GetJobs();
         }
 
+        [HttpGet("{id}")]
         public ActionResult<Job> GetJob(int id)
         {
             Job job = _repository.GetJob(id);
@@ -33,6 +32,7 @@ namespace TLSJobs.Api.Controllers
             return job;
         }
 
+        [HttpDelete("{id}")]
         public ActionResult DeleteJob(int id)
         {
             var job = _repository.GetJob(id);
