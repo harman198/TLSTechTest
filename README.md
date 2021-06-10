@@ -13,7 +13,7 @@ The application is build with two possible configurations, a database hosted on 
 
 2. Using In Memory Repository
 
-    In order to use the InMemoryRepository, the only step required is to change `services.AddScoped<IRepository, InMemoryJobsRepository>` to `services.AddSingleton<IRepository, SqlJobsRepository>` `Startup.cs` file
+    In order to use the InMemoryRepository, the only step required is to change `services.AddScoped<IRepository, InMemoryJobsRepository>` to `services.AddSingleton<IRepository, SqlJobsRepository>` in `Startup.cs` file within the `TLSJobs.Api` project.
 
 ## Future Improvements
 
