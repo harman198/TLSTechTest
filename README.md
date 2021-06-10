@@ -8,7 +8,7 @@ The application is build with two possible configurations, a database hosted on 
 1. Using SQL Server
     
     In order to use database hosted on sql server, there are 2 steps that are required.
-    1. Change the `ConnectionString` in `appsettings.json` file to point to the correct database.
+    1. Change the `TLSJobsAPI` key value under `ConnectionStrings` in `appsettings.json` file to point to the correct database.
     2. Run the Entity Framework migrations using the command `dotnet ef database update`
 
 2. Using In Memory Repository
